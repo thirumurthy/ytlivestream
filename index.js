@@ -36,6 +36,24 @@ app.get('/prx', async (req, res) => {
     res.send(text);
 })
 
+app.get('/prx-image', async (req, res) => {
+    try {
+        const imageUrl = req.query.url;
+      const imageResponse = await fetch(imageUrl);
+  
+      if (!imageResponse.ok) {
+        throw new Error('Failed to fetch image');
+      }
+  
+      const imageBuffer = await imageResponse.buffer();
+      res.set('Content-Type', imageResponse.headers.get('content-type'));
+      res.send(imageBuffer);
+    } catch (error) {
+      console.error('request error:', error);
+      res.status(500).send('request error');
+    }
+  });
+
 function convertToIST(date) {
   // Create a new DateTimeFormat object with timeZone set to 'Asia/Kolkata' (IST)
   const istFormatter = new Intl.DateTimeFormat('en-US', {
