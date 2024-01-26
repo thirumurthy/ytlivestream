@@ -45,9 +45,10 @@ app.get('/prx-image', async (req, res) => {
         throw new Error('Failed to fetch image');
       }
   
-      const imageBuffer = await imageResponse.buffer();
+      const imageBuffer = await imageResponse.arrayBuffer();
+      const buffer = Buffer.from(imageBuffer);
       res.set('Content-Type', imageResponse.headers.get('content-type'));
-      res.send(imageBuffer);
+      res.send(buffer);
     } catch (error) {
       console.error('request error:', error);
       res.status(500).send('request error');
