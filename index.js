@@ -28,6 +28,14 @@ app.get('/', (req, res) => {
     res.send('Youtube live streaming SERVER!');
 })
 
+
+app.get('/prx', async (req, res) => {
+    const videoUrl = req.query.url;
+    const response = await fetch(videoUrl);
+    const text = await response.text();
+    res.send(text);
+})
+
 function convertToIST(date) {
   // Create a new DateTimeFormat object with timeZone set to 'Asia/Kolkata' (IST)
   const istFormatter = new Intl.DateTimeFormat('en-US', {
